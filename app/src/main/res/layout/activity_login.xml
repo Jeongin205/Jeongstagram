@@ -5,11 +5,132 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
-    <Button
-        android:id="@+id/btn"
+    <TextView
+        android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textSize="60sp"
+        android:fontFamily="@font/billabong"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/layout1"/>
+    <LinearLayout
+        android:id="@+id/layout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="35dp"
+        app:layout_constraintTop_toBottomOf="@id/tv"
+        app:layout_constraintBottom_toTopOf="@id/layout2">
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:paddingStart="10dp"
+                android:background="@drawable/edit"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/et_pwd"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="password"
+                android:inputType="textPassword"
+                android:paddingStart="10dp"
+                android:background="@drawable/edit"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/layout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="35dp"
+        app:layout_constraintBottom_toTopOf="@id/layout3"
+        app:layout_constraintTop_toBottomOf="@id/layout1">
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="로그인"
+            android:textColor="@color/white"
+            android:background="@drawable/btn1"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginVertical="15dp">
+            <View
+                android:layout_width="120dp"
+                android:layout_height="1.5dp"
+                android:background="@drawable/line"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="또는"
+                android:layout_marginHorizontal="15dp"/>
+            <View
+                android:layout_width="120dp"
+                android:layout_height="1.5dp"
+                android:background="@drawable/line"/>
+        </LinearLayout>
+        <Button
+            android:id="@+id/btn_glogin"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="구글 로그인"
+            android:textColor="@color/white"
+            android:background="@drawable/btn_signin_google"/>
+        <Button
+            android:id="@+id/btn_flogin"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:text="페이스북 로그인"
+            android:textColor="@color/white"
+            android:background="@drawable/btn_signin_facebook"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:background="@drawable/line"
+        android:layout_marginHorizontal="55dp"
+        app:layout_constraintTop_toBottomOf="@id/layout2"
+        app:layout_constraintBottom_toTopOf="@id/layout3"/>
+
+    <LinearLayout
+        android:id="@+id/layout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="6dp"
+            android:text="아직 회원이 아니신가요?"/>
+        <TextView
+            android:id="@+id/join"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:text="회원가입"
+            android:textColor="@color/purple_500"/>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

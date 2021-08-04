@@ -1,11 +1,12 @@
-package com.example.jeongstagram;
+package com.example.jeongstagram.tutorial;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
+
+import com.example.jeongstagram.R;
 
 import java.util.ArrayList;
 import java.util.List;

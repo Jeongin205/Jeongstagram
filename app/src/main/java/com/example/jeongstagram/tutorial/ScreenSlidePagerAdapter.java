@@ -1,4 +1,4 @@
-package com.example.jeongstagram;
+package com.example.jeongstagram.tutorial;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
