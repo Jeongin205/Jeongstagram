@@ -1,9 +1,9 @@
 package com.example.jeongstagram;
 
 public class UserAccount {
-    String name;
-    String email;
-    String uid;
+    public String name;
+    public String email;
+    public String uid;
 
     public UserAccount(String name, String email, String uid) {
         this.name = name;
