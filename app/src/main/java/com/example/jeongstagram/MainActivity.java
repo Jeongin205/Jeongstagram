@@ -7,18 +7,20 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import com.example.jeongstagram.databinding.ActivityMainBinding;
 import com.example.jeongstagram.tutorial.TutorialActivity;
 
 public class MainActivity extends AppCompatActivity {
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         SharedPreferences sharedPreferences = getSharedPreferences("checkFirstAccess", Activity.MODE_PRIVATE);
         boolean checkFirstAccess = sharedPreferences.getBoolean("checkFirstAccess", false);
-
 
         if (!checkFirstAccess) {
             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -29,5 +31,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(tutorialIntent);
             finish();
         }
+
+
     }
 }
