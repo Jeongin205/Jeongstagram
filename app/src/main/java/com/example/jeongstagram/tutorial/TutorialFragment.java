@@ -10,6 +10,7 @@ import android.widget.Button;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.jeongstagram.ProfileActivity;
 import com.example.jeongstagram.main.MainActivity;
 import com.example.jeongstagram.R;
 
@@ -39,7 +40,7 @@ public class TutorialFragment extends Fragment {
             buttonTutorialEnd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    getActivity().startActivity(new Intent(getActivity(), MainActivity.class));
+                    getActivity().startActivity(new Intent(getActivity(), ProfileActivity.class));
                     getActivity().finish();
                 }
             });
