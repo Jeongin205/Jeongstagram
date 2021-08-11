@@ -10,7 +10,7 @@ import android.widget.Button;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.jeongstagram.MainActivity;
+import com.example.jeongstagram.main.MainActivity;
 import com.example.jeongstagram.R;
 
 public class TutorialFragment extends Fragment {

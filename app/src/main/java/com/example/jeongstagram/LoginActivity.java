@@ -4,13 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.Toast;
 
 import com.example.jeongstagram.databinding.ActivityLoginBinding;
+import com.example.jeongstagram.main.MainActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -18,7 +18,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -59,34 +58,17 @@ public class LoginActivity extends AppCompatActivity {
         binding.btnGlogin.setOnClickListener(v -> {
             signIn();
         });
-        binding.etEmail.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after){}
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-            @Override
-            public void afterTextChanged(Editable s) {
-                if(s!=null) isEmail = true;
-                else isEmail = false;
-            }
-        });
-        binding.etPwd.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-            @Override
-            public void afterTextChanged(Editable s) {
-                if(s!=null) isPwd = true;
-                else  isPwd =true;
-            }
-        });
+
         binding.join.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, JoinActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.sliding_up, R.anim.stay);
         });
         binding.btnLogin.setOnClickListener(v -> {
+            if(binding.etEmail.getText().toString().replace(" ", "").equals("")) isEmail = false;
+            else isEmail = true;
+            if(binding.etPwd.getText().toString().replace(" ", "").equals("")) isPwd = false;
+            else isPwd = true;
             if (isEmail && isPwd) {
                 String email = binding.etEmail.getText().toString();
                 String pwd = binding.etPwd.getText().toString();
@@ -98,7 +80,6 @@ public class LoginActivity extends AppCompatActivity {
                             updateUI(user);
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
-
                         } else
                             Toast.makeText(getApplicationContext(), "로그인오류", Toast.LENGTH_SHORT).show();
                             updateUI(null);
