@@ -121,10 +121,12 @@ public class JoinActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                            String Uid = user.getUid();
-                            String imageUrl = null;
-                            UserAccount account = new UserAccount(name, email, Uid, imageUrl);
-                            databaseReference.child("User").child(Uid).setValue(account);
+                            String uid = user.getUid();
+                            UserAccount account = new UserAccount();
+                            account.name = name;
+                            account.uid = uid;
+                            account.email = email;
+                            databaseReference.child("User").child(uid).setValue(account);
                             progressDialog.dismiss();
                             Intent intent = new Intent(JoinActivity.this, LoginActivity.class);
                             startActivity(intent);

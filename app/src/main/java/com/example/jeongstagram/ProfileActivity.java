@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -36,6 +37,7 @@ public class ProfileActivity extends AppCompatActivity {
             intent. setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
             startActivityForResult(intent, GET_GALLERY_IMAGE);
         });
+
         binding.btnSave.setOnClickListener(v -> {
             if(selectedImageUri!=null) {
                 FirebaseStorage.getInstance().getReference().child("userImages").child(uid).putFile(selectedImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
@@ -52,8 +54,8 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        binding.btnSave.setOnClickListener(v -> {
-            FirebaseStorage.getInstance().getReference().child("userImages").child(uid).putFile(Uri.parse("android.resource://com.example.jeongstagram/drawable/ic_account.png")).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+        binding.btnSkip.setOnClickListener(v -> {
+            FirebaseStorage.getInstance().getReference().child("userImages").child(uid).putFile(Uri.parse("android.resource://com.example.jeongstagram/drawable/ic_account")).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onComplete(Task<UploadTask.TaskSnapshot> task) {
                     String imageUrl = task.getResult().getStorage().getDownloadUrl().toString();

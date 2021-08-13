@@ -2,6 +2,7 @@ package com.example.jeongstagram.tutorial;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +25,6 @@ import com.google.firebase.database.ValueEventListener;
 public class TutorialFragment extends Fragment {
 
     private Button buttonTutorialEnd;
-    boolean isimage=false;
 
     private TutorialFragment() {}
 
@@ -38,38 +38,20 @@ public class TutorialFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         int page = this.getArguments().getInt("tutorial_page");
         View view = inflater.inflate(page, container, false);
-
-        FirebaseDatabase.getInstance().getReference().child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("imageUrl").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.getValue(String.class)==null) isimage = false;
-                else isimage = true;
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
 
         if (page == R.layout.tutorial_3) {
             buttonTutorialEnd = view.findViewById(R.id.btn_start);
             buttonTutorialEnd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (isimage){
-                        getActivity().startActivity(new Intent(getActivity(), MainActivity.class));
-                        getActivity().finish();
-                    }
-                    else{
                         getActivity().startActivity(new Intent(getActivity(), ProfileActivity.class));
                         getActivity().finish();
                     }
                 }
-            });
+            );
         }
-
         return view;
 
     }
