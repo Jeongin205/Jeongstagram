@@ -127,7 +127,8 @@ public class LoginActivity extends AppCompatActivity {
                             String uid = user.getUid();
                             String name = user.getDisplayName();
                             String email = user.getEmail();
-                            UserAccount account = new UserAccount(name, email, uid);
+                            String imageUrl = null;
+                            UserAccount account = new UserAccount(name, email, uid, imageUrl);
                             databaseReference.child("User").child(uid).setValue(account);
                             updateUI(user);
                         } else {
