@@ -5,10 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.jeongstagram.databinding.ActivityProfileBinding;
 import com.example.jeongstagram.main.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,6 +34,8 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        binding.ivUser.setBackground(new ShapeDrawable(new OvalShape()));
+        binding.ivUser.setClipToOutline(true);
 
         binding.ivUser.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK);
@@ -43,8 +48,6 @@ public class ProfileActivity extends AppCompatActivity {
                 FirebaseStorage.getInstance().getReference().child("userImages").child(uid).putFile(selectedImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                        String imageUrl = task.getResult().getStorage().getDownloadUrl().toString();
-                        FirebaseDatabase.getInstance().getReference().child("User").child(uid).child("imageUrl").setValue(imageUrl);
                         intent();
                     }
                 });
@@ -58,8 +61,6 @@ public class ProfileActivity extends AppCompatActivity {
             FirebaseStorage.getInstance().getReference().child("userImages").child(uid).putFile(Uri.parse("android.resource://com.example.jeongstagram/drawable/ic_account")).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onComplete(Task<UploadTask.TaskSnapshot> task) {
-                    String imageUrl = task.getResult().getStorage().getDownloadUrl().toString();
-                    FirebaseDatabase.getInstance().getReference().child("User").child(uid).child("imageUrl").setValue(imageUrl);
                     intent();
                 }
             });
@@ -71,7 +72,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         if (requestCode == GET_GALLERY_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             selectedImageUri = data.getData();
-            binding.ivUser.setImageURI(selectedImageUri);
+            Glide.with(getApplicationContext()).load(selectedImageUri).into(binding.ivUser);
         }
     }
     private void intent(){

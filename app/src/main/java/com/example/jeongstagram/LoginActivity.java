@@ -124,13 +124,10 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
-                            UserAccount account = new UserAccount();
                             String uid = user.getUid();
                             String name = user.getDisplayName();
                             String email = user.getEmail();
-                            account.uid = uid;
-                            account.name=name;
-                            account.email=email;
+                            UserAccount account = new UserAccount(name, email, uid);
                             databaseReference.child("User").child(uid).setValue(account);
                             updateUI(user);
                         } else {

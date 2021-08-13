@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         new TabLayoutMediator(binding.tabLayout, binding.pager, (tab, position) -> tab.setIcon(titles[position])).attach();
 
-        SharedPreferences sharedPreferences = getSharedPreferences("checkFirstAccess", Activity.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("checkFirstAccess", MODE_PRIVATE);
         boolean checkFirstAccess = sharedPreferences.getBoolean("checkFirstAccess", false);
 
         if (!checkFirstAccess) {
