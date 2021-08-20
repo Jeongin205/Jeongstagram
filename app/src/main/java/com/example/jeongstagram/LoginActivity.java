@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.jeongstagram.databinding.ActivityLoginBinding;
@@ -23,8 +24,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
@@ -59,15 +63,16 @@ public class LoginActivity extends AppCompatActivity {
             signIn();
         });
 
+
         binding.join.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, JoinActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.sliding_up, R.anim.stay);
         });
         binding.btnLogin.setOnClickListener(v -> {
-            if(binding.etEmail.getText().toString().replace(" ", "").equals("")) isEmail = false;
+            if (binding.etEmail.getText().toString().replace(" ", "").equals("")) isEmail = false;
             else isEmail = true;
-            if(binding.etPwd.getText().toString().replace(" ", "").equals("")) isPwd = false;
+            if (binding.etPwd.getText().toString().replace(" ", "").equals("")) isPwd = false;
             else isPwd = true;
             if (isEmail && isPwd) {
                 String email = binding.etEmail.getText().toString();
@@ -82,11 +87,10 @@ public class LoginActivity extends AppCompatActivity {
                             startActivity(intent);
                         } else
                             Toast.makeText(getApplicationContext(), "로그인오류", Toast.LENGTH_SHORT).show();
-                            updateUI(null);
+                        updateUI(null);
                     }
                 });
-            }
-            else {
+            } else {
                 if (!isEmail && !isPwd)
                     Toast.makeText(getApplicationContext(), "정보를 입력해주세요", Toast.LENGTH_SHORT).show();
                 else if (!isEmail)
@@ -96,10 +100,12 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -125,10 +131,13 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
                             String uid = user.getUid();
+                            Log.d("asdf", "아싸");
+
                             String name = user.getDisplayName();
                             String email = user.getEmail();
                             UserAccount account = new UserAccount(name, email, uid);
                             databaseReference.child("User").child(uid).setValue(account);
+
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.

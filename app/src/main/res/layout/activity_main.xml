@@ -19,6 +19,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_alignParentBottom="true">
     </com.google.android.material.tabs.TabLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

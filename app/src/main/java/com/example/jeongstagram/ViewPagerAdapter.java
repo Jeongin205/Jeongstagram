@@ -18,13 +18,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ViewPagerAdapter extends FragmentStateAdapter {
-    private  final List<Fragment> list = new ArrayList<>();
+    private final List<Fragment> list = new ArrayList<>();
 
     public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
 
-    public  void addFrag(Fragment fragment){
+    public void addFrag(Fragment fragment) {
         list.add(fragment);
     }
 

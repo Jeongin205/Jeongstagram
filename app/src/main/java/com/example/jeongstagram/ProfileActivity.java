@@ -39,20 +39,19 @@ public class ProfileActivity extends AppCompatActivity {
 
         binding.ivUser.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK);
-            intent. setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+            intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
             startActivityForResult(intent, GET_GALLERY_IMAGE);
         });
 
         binding.btnSave.setOnClickListener(v -> {
-            if(selectedImageUri!=null) {
+            if (selectedImageUri != null) {
                 FirebaseStorage.getInstance().getReference().child("userImages").child(uid).putFile(selectedImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                         intent();
                     }
                 });
-            }
-            else{
+            } else {
                 Toast.makeText(getApplicationContext(), "사진을 넣어주세요", Toast.LENGTH_SHORT).show();
             }
         });
@@ -66,6 +65,7 @@ public class ProfileActivity extends AppCompatActivity {
             });
         });
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -75,7 +75,8 @@ public class ProfileActivity extends AppCompatActivity {
             Glide.with(getApplicationContext()).load(selectedImageUri).into(binding.ivUser);
         }
     }
-    private void intent(){
+
+    private void intent() {
         Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
         startActivity(intent);
     }

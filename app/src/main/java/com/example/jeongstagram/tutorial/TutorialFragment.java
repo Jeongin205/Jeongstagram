@@ -26,7 +26,8 @@ public class TutorialFragment extends Fragment {
 
     private Button buttonTutorialEnd;
 
-    private TutorialFragment() {}
+    private TutorialFragment() {
+    }
 
     public static TutorialFragment newInstance(int page) {
         TutorialFragment tutorialFragment = new TutorialFragment();
@@ -44,12 +45,12 @@ public class TutorialFragment extends Fragment {
         if (page == R.layout.tutorial_3) {
             buttonTutorialEnd = view.findViewById(R.id.btn_start);
             buttonTutorialEnd.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                        getActivity().startActivity(new Intent(getActivity(), ProfileActivity.class));
-                        getActivity().finish();
-                    }
-                }
+                                                     @Override
+                                                     public void onClick(View view) {
+                                                         getActivity().startActivity(new Intent(getActivity(), ProfileActivity.class));
+                                                         getActivity().finish();
+                                                     }
+                                                 }
             );
         }
         return view;
