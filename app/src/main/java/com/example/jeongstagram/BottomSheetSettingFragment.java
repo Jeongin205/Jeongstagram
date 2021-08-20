@@ -1,5 +1,6 @@
 package com.example.jeongstagram;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -21,13 +22,9 @@ public class BottomSheetSettingFragment extends BottomSheetDialogFragment {
         binding = FragmentBottomSheetSettingBinding.inflate(inflater, container, false);
         View v = binding.getRoot();
 
-        binding.btnA.setOnClickListener(v1 -> {
-            dismiss();
-        });
-        binding.btnB.setOnClickListener(v1 -> {
-            dismiss();
-        });
-        binding.btnC.setOnClickListener(v1 -> {
+        binding.btnSetting.setOnClickListener(v1 -> {
+            Intent intent = new Intent(getActivity(), SettingActivity.class);
+            startActivity(intent);
             dismiss();
         });
 
