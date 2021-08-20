@@ -7,8 +7,10 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.jeongstagram.BottomSheetSettingFragment;
 import com.example.jeongstagram.databinding.FragmentPhotoBinding;
 import com.example.jeongstagram.databinding.FragmentProfileBinding;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class ProfileFragment extends Fragment {
     private FragmentProfileBinding binding;
@@ -18,6 +20,10 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        binding.btnSettingMenu.setOnClickListener(v -> {
+            BottomSheetSettingFragment sheetDialogFragment = new BottomSheetSettingFragment();
+            sheetDialogFragment.show(getActivity().getSupportFragmentManager(), "bottomSheet");
+        });
         // Inflate the layout for this fragment
         return view;
     }

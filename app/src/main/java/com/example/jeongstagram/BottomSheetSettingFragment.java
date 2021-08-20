@@ -9,9 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.jeongstagram.databinding.FragmentBottomSheetSettingBinding;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 
-public class BottomSheetSettingFragment extends Fragment {
+public class BottomSheetSettingFragment extends BottomSheetDialogFragment {
     FragmentBottomSheetSettingBinding binding;
 
     @Override
@@ -19,6 +20,18 @@ public class BottomSheetSettingFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentBottomSheetSettingBinding.inflate(inflater, container, false);
         View v = binding.getRoot();
+
+        binding.btnA.setOnClickListener(v1 -> {
+            dismiss();
+        });
+        binding.btnB.setOnClickListener(v1 -> {
+            dismiss();
+        });
+        binding.btnC.setOnClickListener(v1 -> {
+            dismiss();
+        });
+
+
         // Inflate the layout for this fragment
         return v;
     }
