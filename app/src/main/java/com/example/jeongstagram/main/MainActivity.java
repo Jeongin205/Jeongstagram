@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Icon;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.TableLayout;
 
@@ -15,12 +16,17 @@ import com.example.jeongstagram.R;
 import com.example.jeongstagram.ViewPagerAdapter;
 import com.example.jeongstagram.databinding.ActivityMainBinding;
 import com.example.jeongstagram.tutorial.TutorialActivity;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private int[] titles = new int[]{R.drawable.ic_home, R.drawable.ic_search, R.drawable.ic_photo, R.drawable.ic_shop, R.drawable.ic_user};
+    boolean isProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +63,5 @@ public class MainActivity extends AppCompatActivity {
             startActivity(tutorialIntent);
             finish();
         }
-
-
     }
 }

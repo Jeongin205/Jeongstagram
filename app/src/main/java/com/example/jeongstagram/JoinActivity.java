@@ -134,7 +134,8 @@ public class JoinActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             String uid = user.getUid();
-                            UserAccount account = new UserAccount(name, email, uid);
+                            String introduce = "안녕하세요";
+                            UserAccount account = new UserAccount(name, email, uid, introduce);
                             databaseReference.child("User").child(uid).setValue(account);
                             progressDialog.dismiss();
                             Intent intent = new Intent(JoinActivity.this, LoginActivity.class);

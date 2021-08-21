@@ -3,6 +3,7 @@ package com.example.jeongstagram;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.jeongstagram.databinding.ActivityLoginBinding;
 import com.example.jeongstagram.main.MainActivity;
+import com.example.jeongstagram.tutorial.ProfileActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -39,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     boolean isPwd = false;
     private GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 9001;
-
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         mAuth = FirebaseAuth.getInstance();
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -81,10 +84,12 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            setProgressDialog();
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
+                            progressDialog.dismiss();
                         } else
                             Toast.makeText(getApplicationContext(), "로그인오류", Toast.LENGTH_SHORT).show();
                         updateUI(null);
@@ -132,15 +137,25 @@ public class LoginActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             String uid = user.getUid();
                             Log.d("asdf", "아싸");
-
-                            String name = user.getDisplayName();
-                            String email = user.getEmail();
-                            UserAccount account = new UserAccount(name, email, uid);
-                            databaseReference.child("User").child(uid).setValue(account);
-
+                            databaseReference.child("User").child(uid).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (snapshot.getValue(getClass()) == null) {
+                                        setProgressDialog();
+                                        String name = user.getDisplayName();
+                                        String email = user.getEmail();
+                                        String introduce = "안녕하세요";
+                                        UserAccount account = new UserAccount(name, email, uid, introduce);
+                                        databaseReference.child("User").child(uid).setValue(account);
+                                        progressDialog.dismiss();
+                                    }
+                                }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                }
+                            });
                             updateUI(user);
                         } else {
-                            // If sign in fails, display a message to the user.
                             updateUI(null);
                         }
                     }
@@ -153,5 +168,12 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
+    }
+    private void setProgressDialog(){
+        progressDialog = new ProgressDialog(LoginActivity.this);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setMessage("처리중입니다..");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
     }
 }

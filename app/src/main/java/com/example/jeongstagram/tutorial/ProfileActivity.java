@@ -3,6 +3,7 @@ package com.example.jeongstagram.tutorial;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.jeongstagram.JoinActivity;
 import com.example.jeongstagram.databinding.ActivityProfileBinding;
 import com.example.jeongstagram.main.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,6 +28,7 @@ public class ProfileActivity extends AppCompatActivity {
     Uri selectedImageUri;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String uid = user.getUid();
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,23 +45,28 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         binding.btnSave.setOnClickListener(v -> {
+            setProgressDialog();
             if (selectedImageUri != null) {
                 FirebaseStorage.getInstance().getReference().child("userImages").child(uid).putFile(selectedImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                         intent();
+                        progressDialog.dismiss();
                     }
                 });
             } else {
+                progressDialog.dismiss();
                 Toast.makeText(getApplicationContext(), "사진을 넣어주세요", Toast.LENGTH_SHORT).show();
             }
         });
 
         binding.btnSkip.setOnClickListener(v -> {
+            setProgressDialog();
             FirebaseStorage.getInstance().getReference().child("userImages").child(uid).putFile(Uri.parse("android.resource://com.example.jeongstagram/drawable/ic_account")).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onComplete(Task<UploadTask.TaskSnapshot> task) {
                     intent();
+                    progressDialog.dismiss();
                 }
             });
         });
@@ -77,6 +85,13 @@ public class ProfileActivity extends AppCompatActivity {
     private void intent() {
         Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
         startActivity(intent);
+    }
+    private void setProgressDialog(){
+        progressDialog = new ProgressDialog(ProfileActivity.this);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("처리중입니다..");
+        progressDialog.show();
     }
 
 }
