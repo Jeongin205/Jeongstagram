@@ -22,7 +22,7 @@ public class BottomSheetSettingFragment extends BottomSheetDialogFragment {
         binding = FragmentBottomSheetSettingBinding.inflate(inflater, container, false);
         View v = binding.getRoot();
 
-        binding.btnSetting.setOnClickListener(v1 -> {
+        binding.userSetting.setOnClickListener(v1 -> {
             Intent intent = new Intent(getActivity(), SettingActivity.class);
             startActivity(intent);
             dismiss();
