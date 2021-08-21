@@ -63,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         binding.btnGlogin.setOnClickListener(v -> {
+            setProgressDialog();
             signIn();
         });
 
@@ -73,6 +74,7 @@ public class LoginActivity extends AppCompatActivity {
             overridePendingTransition(R.anim.sliding_up, R.anim.stay);
         });
         binding.btnLogin.setOnClickListener(v -> {
+            setProgressDialog();
             if (binding.etEmail.getText().toString().replace(" ", "").equals("")) isEmail = false;
             else isEmail = true;
             if (binding.etPwd.getText().toString().replace(" ", "").equals("")) isPwd = false;
@@ -84,7 +86,6 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            setProgressDialog();
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -141,7 +142,6 @@ public class LoginActivity extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     if (snapshot.getValue(getClass()) == null) {
-                                        setProgressDialog();
                                         String name = user.getDisplayName();
                                         String email = user.getEmail();
                                         String introduce = "안녕하세요";
@@ -150,6 +150,7 @@ public class LoginActivity extends AppCompatActivity {
                                         progressDialog.dismiss();
                                     }
                                 }
+
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError error) {
                                 }
@@ -169,10 +170,11 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }
     }
-    private void setProgressDialog(){
+
+    private void setProgressDialog() {
         progressDialog = new ProgressDialog(LoginActivity.this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setMessage("처리중입니다..");
+        progressDialog.setMessage("로그인중입니다");
         progressDialog.setCancelable(false);
         progressDialog.show();
     }

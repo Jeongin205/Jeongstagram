@@ -11,8 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Jeongstagram">
-        <activity android:name=".SettingActivity"></activity>
-        <activity android:name=".tutorial.ProfileActivity"></activity>
+        <activity android:name=".EditProfileActivity"></activity>
+        <activity android:name=".SettingActivity" />
+        <activity android:name=".tutorial.ProfileActivity" />
         <activity android:name=".tutorial.TutorialActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".JoinActivity" />
