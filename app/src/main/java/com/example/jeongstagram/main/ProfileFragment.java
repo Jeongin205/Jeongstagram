@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.example.jeongstagram.BottomSheetSettingFragment;
 import com.example.jeongstagram.EditProfileActivity;
 import com.example.jeongstagram.UserAccount;
+import com.example.jeongstagram.WriteActivity;
 import com.example.jeongstagram.databinding.FragmentPhotoBinding;
 import com.example.jeongstagram.databinding.FragmentProfileBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,6 +39,11 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
+        binding.btnWrite.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), WriteActivity.class);
+            startActivity(intent);
+        });
         binding.btnSettingMenu.setOnClickListener(v -> {
             BottomSheetSettingFragment sheetDialogFragment = new BottomSheetSettingFragment();
             sheetDialogFragment.show(getActivity().getSupportFragmentManager(), "bottomSheet");

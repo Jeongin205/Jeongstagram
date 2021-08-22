@@ -54,7 +54,7 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {}
         });
-        storageReference.child("userImage/"+uid).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        storageReference.child("userImages/"+uid).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 Glide.with(EditProfileActivity.this).load(uri).into(binding.profile);

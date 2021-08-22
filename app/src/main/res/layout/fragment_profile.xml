@@ -7,7 +7,7 @@
     tools:context=".main.HomeFragment">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="270dp"
+        android:layout_height="290dp"
         app:layout_constraintTop_toTopOf="parent">
         <ImageButton
             android:id="@+id/btn_settingMenu"
@@ -17,16 +17,26 @@
             android:background="@color/transparent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:layout_marginRight="10dp"/>
+        <ImageButton
+            android:id="@+id/btn_write"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_write"
+            android:background="@color/transparent"
+            app:layout_constraintBottom_toBottomOf="@id/btn_settingMenu"
+            app:layout_constraintRight_toLeftOf="@id/btn_settingMenu"
+            app:layout_constraintTop_toTopOf="@id/btn_settingMenu"
+            android:layout_marginRight="30dp"/>
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile"
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:layout_marginLeft="25dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="20dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@id/btn_settingMenu"/>
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
