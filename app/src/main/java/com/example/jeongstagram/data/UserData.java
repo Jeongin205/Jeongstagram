@@ -1,12 +1,12 @@
-package com.example.jeongstagram;
+package com.example.jeongstagram.data;
 
-public class UserAccount {
+public class UserData {
     public String name;
     public String email;
     public String uid;
     public String introduce;
 
-    public UserAccount(){}
+    public UserData(){}
 
     public String getName() {
         return name;
@@ -37,7 +37,7 @@ public class UserAccount {
     }
 
 
-    public UserAccount(String name, String email, String uid, String introduce) {
+    public UserData(String name, String email, String uid, String introduce) {
         this.name = name;
         this.email = email;
         this.uid = uid;

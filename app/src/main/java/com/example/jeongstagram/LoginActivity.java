@@ -6,14 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.jeongstagram.data.UserData;
 import com.example.jeongstagram.databinding.ActivityLoginBinding;
 import com.example.jeongstagram.main.MainActivity;
-import com.example.jeongstagram.tutorial.ProfileActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -145,7 +143,7 @@ public class LoginActivity extends AppCompatActivity {
                                         String name = user.getDisplayName();
                                         String email = user.getEmail();
                                         String introduce = "안녕하세요";
-                                        UserAccount account = new UserAccount(name, email, uid, introduce);
+                                        UserData account = new UserData(name, email, uid, introduce);
                                         databaseReference.child("User").child(uid).setValue(account);
                                         progressDialog.dismiss();
                                     }

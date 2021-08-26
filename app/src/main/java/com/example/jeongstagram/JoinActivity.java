@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.Toast;
 
+import com.example.jeongstagram.data.UserData;
 import com.example.jeongstagram.databinding.ActivityJoinBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -135,7 +136,7 @@ public class JoinActivity extends AppCompatActivity {
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             String uid = user.getUid();
                             String introduce = "안녕하세요";
-                            UserAccount account = new UserAccount(name, email, uid, introduce);
+                            UserData account = new UserData(name, email, uid, introduce);
                             databaseReference.child("User").child(uid).setValue(account);
                             progressDialog.dismiss();
                             Intent intent = new Intent(JoinActivity.this, LoginActivity.class);

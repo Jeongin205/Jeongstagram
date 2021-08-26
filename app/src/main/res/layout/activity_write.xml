@@ -25,7 +25,7 @@
         app:layout_constraintTop_toTopOf="@id/btn_cancel"
         app:layout_constraintBottom_toBottomOf="@id/btn_cancel"/>
     <ImageButton
-        android:id="@+id/btn_edit"
+        android:id="@+id/btn_send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_check"
@@ -69,6 +69,7 @@
         app:layout_constraintTop_toTopOf="@id/et_location"
         app:layout_constraintBottom_toBottomOf="@id/et_location"
         app:layout_constraintLeft_toRightOf="@id/et_location"/>
+
     <EditText
         android:id="@+id/et_post"
         android:layout_width="match_parent"
@@ -76,6 +77,9 @@
         android:layout_margin="20dp"
         android:background="@drawable/line_2"
         android:gravity="top"
+        android:hint="글을 남겨보세요"
+        android:padding="7dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_location"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_location" />
 </androidx.constraintlayout.widget.ConstraintLayout>

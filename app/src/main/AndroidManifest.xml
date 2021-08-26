@@ -19,7 +19,7 @@
         <activity android:name=".tutorial.TutorialActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".JoinActivity" />
-        <activity android:name=".StartActivity">
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

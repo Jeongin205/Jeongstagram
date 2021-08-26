@@ -35,6 +35,7 @@ public class WriteActivity extends AppCompatActivity {
     String uid = user.getUid();
     private GpsTracker gpsTracker;
 
+
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
@@ -67,6 +68,12 @@ public class WriteActivity extends AppCompatActivity {
 
         binding.btnCancel.setOnClickListener(v -> {
             finish();
+        });
+        binding.btnSend.setOnClickListener(v -> {
+            if(selectedImageUri!=null){
+
+            }
+            else Toast.makeText(getApplicationContext(), "이미지를 넣어주세요", Toast.LENGTH_SHORT).show();
         });
 
     }

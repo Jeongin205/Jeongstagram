@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.jeongstagram.data.UserData;
 import com.example.jeongstagram.databinding.ActivityEditProfileBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -47,7 +48,7 @@ public class EditProfileActivity extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                UserAccount account = snapshot.getValue(UserAccount.class);
+                UserData account = snapshot.getValue(UserData.class);
                 binding.etName.setText(account.getName());
                 binding.etIntroduce.setText(account.getIntroduce());
             }

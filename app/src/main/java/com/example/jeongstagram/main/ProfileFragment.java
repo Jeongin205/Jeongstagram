@@ -13,12 +13,10 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.example.jeongstagram.BottomSheetSettingFragment;
 import com.example.jeongstagram.EditProfileActivity;
-import com.example.jeongstagram.UserAccount;
+import com.example.jeongstagram.data.UserData;
 import com.example.jeongstagram.WriteActivity;
-import com.example.jeongstagram.databinding.FragmentPhotoBinding;
 import com.example.jeongstagram.databinding.FragmentProfileBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -52,7 +50,7 @@ public class ProfileFragment extends Fragment {
         databaseReference.child("User").child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                UserAccount account = snapshot.getValue(UserAccount.class);
+                UserData account = snapshot.getValue(UserData.class);
                 binding.tvName.setText(account.getName());
                 if(account.getIntroduce()==null) binding.tvIntroduce.setText("");
                 else binding.tvIntroduce.setText(account.getIntroduce());
