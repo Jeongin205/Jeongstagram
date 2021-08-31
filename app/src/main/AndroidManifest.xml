@@ -18,7 +18,7 @@
         <activity android:name=".tutorial.ProfileActivity" />
         <activity android:name=".tutorial.TutorialActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".JoinActivity" />
+        <activity android:name=".SignUpActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         binding.join.setOnClickListener(v -> {
-            Intent intent = new Intent(LoginActivity.this, JoinActivity.class);
+            Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.sliding_up, R.anim.stay);
         });

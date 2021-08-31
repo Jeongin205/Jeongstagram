@@ -42,15 +42,15 @@ public class EditProfileActivity extends AppCompatActivity {
         binding = ActivityEditProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.btnCancel.setOnClickListener(v -> {
+        binding.cancelButton.setOnClickListener(v -> {
             finish();
         });
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 UserData account = snapshot.getValue(UserData.class);
-                binding.etName.setText(account.getName());
-                binding.etIntroduce.setText(account.getIntroduce());
+                binding.nameEdittext.setText(account.getName());
+                binding.introduceEdittext.setText(account.getIntroduce());
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {}
@@ -58,36 +58,36 @@ public class EditProfileActivity extends AppCompatActivity {
         storageReference.child("userImages/"+uid).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Glide.with(EditProfileActivity.this).load(uri).into(binding.profile);
+                Glide.with(EditProfileActivity.this).load(uri).into(binding.profileImageview);
             }
         });
 
-        binding.profile.setOnClickListener(v -> {
+        binding.profileImageview.setOnClickListener(v -> {
             setImage();
         });
-        binding.tvProfile.setOnClickListener(v -> {
+        binding.profileTextview.setOnClickListener(v -> {
             setImage();
         });
 
-        binding.etName.addTextChangedListener(new TextWatcher() {
+        binding.nameEdittext.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override
             public void afterTextChanged(Editable s) {
-                if(binding.etName.getText().toString().replace(" ", "").equals("")){
-                    binding.tvErrorName.setVisibility(View.VISIBLE);
+                if(binding.nameEdittext.getText().toString().replace(" ", "").equals("")){
+                    binding.nameErrorTextview.setVisibility(View.VISIBLE);
                     isName = false;
                 }
                 else{
-                    binding.tvErrorName.setVisibility(View.INVISIBLE);
+                    binding.nameErrorTextview.setVisibility(View.INVISIBLE);
                     isName = true;
                 }
             }
         });
 
-        binding.btnEdit.setOnClickListener(v -> {
+        binding.editButton.setOnClickListener(v -> {
             if(isName){
                 if (selectedImageUri != null) {
                     FirebaseStorage.getInstance().getReference().child("userImages").child(uid).putFile(selectedImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
@@ -95,8 +95,8 @@ public class EditProfileActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {}
                     });
                 }
-                String name = binding.etName.getText().toString();
-                String introduce = binding.etIntroduce.getText().toString();
+                String name = binding.nameEdittext.getText().toString();
+                String introduce = binding.introduceEdittext.getText().toString();
                 databaseReference.child("name").setValue(name);
                 databaseReference.child("introduce").setValue(introduce);
                 finish();
@@ -115,7 +115,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
         if (requestCode == GET_GALLERY_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             selectedImageUri = data.getData();
-            Glide.with(getApplicationContext()).load(selectedImageUri).into(binding.profile);
+            Glide.with(getApplicationContext()).load(selectedImageUri).into(binding.profileImageview);
         }
     }
     private void setImage(){
