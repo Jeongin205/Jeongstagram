@@ -34,16 +34,17 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        binding.ivUser.setBackground(new ShapeDrawable(new OvalShape()));
-        binding.ivUser.setClipToOutline(true);
+        binding.profileImageview.setBackground(new ShapeDrawable(new OvalShape()));
+        binding.profileImageview.setClipToOutline(true);
 
-        binding.ivUser.setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_PICK);
-            intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-            startActivityForResult(intent, GET_GALLERY_IMAGE);
+        binding.profileImageview.setOnClickListener(v -> {
+            setImage();
+        });
+        binding.profileTextview.setOnClickListener(v -> {
+            setImage();
         });
 
-        binding.btnSave.setOnClickListener(v -> {
+        binding.saveButton.setOnClickListener(v -> {
             setProgressDialog();
             if (selectedImageUri != null) {
                 FirebaseStorage.getInstance().getReference().child("userImages").child(uid).putFile(selectedImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
@@ -59,7 +60,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        binding.btnSkip.setOnClickListener(v -> {
+        binding.skipButton.setOnClickListener(v -> {
             setProgressDialog();
             FirebaseStorage.getInstance().getReference().child("userImages").child(uid).putFile(Uri.parse("android.resource://com.example.jeongstagram/drawable/ic_account")).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -77,7 +78,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         if (requestCode == GET_GALLERY_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             selectedImageUri = data.getData();
-            Glide.with(getApplicationContext()).load(selectedImageUri).into(binding.ivUser);
+            Glide.with(getApplicationContext()).load(selectedImageUri).into(binding.profileImageview);
         }
     }
 
@@ -91,6 +92,11 @@ public class ProfileActivity extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.setMessage("처리중입니다..");
         progressDialog.show();
+    }
+    private void setImage(){
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+        startActivityForResult(intent, GET_GALLERY_IMAGE);
     }
 
 }

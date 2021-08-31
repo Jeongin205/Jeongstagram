@@ -53,23 +53,23 @@ public class WriteActivity extends AppCompatActivity {
 
             checkRunTimePermission();
         }
-        binding.btnLocation.setOnClickListener(v -> {
+        binding.locationButton.setOnClickListener(v -> {
             gpsTracker = new GpsTracker(WriteActivity.this);
             double latitude = gpsTracker.getLatitude();
             double longitude = gpsTracker.getLongitude();
             String address = getCurrentAddress(latitude, longitude);
-            binding.etLocation.setText(address);
+            binding.locationEdittext.setText(address);
         });
-        binding.postImage.setOnClickListener(v -> {
+        binding.postImageview.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK);
             intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
             startActivityForResult(intent, GET_GALLERY_IMAGE);
         });
 
-        binding.btnCancel.setOnClickListener(v -> {
+        binding.cancelButton.setOnClickListener(v -> {
             finish();
         });
-        binding.btnSend.setOnClickListener(v -> {
+        binding.sendButton.setOnClickListener(v -> {
             if(selectedImageUri!=null){
 
             }
@@ -233,7 +233,7 @@ public class WriteActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GET_GALLERY_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             selectedImageUri = data.getData();
-            Glide.with(getApplicationContext()).load(selectedImageUri).into(binding.postImage);
+            Glide.with(getApplicationContext()).load(selectedImageUri).into(binding.postImageview);
         }
         switch (requestCode) {
 

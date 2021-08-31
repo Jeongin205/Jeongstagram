@@ -12,11 +12,11 @@
         android:text="프로필 설정"
         android:textSize="30sp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/iv_user"
+        app:layout_constraintBottom_toTopOf="@id/profile_imageview"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
     <ImageView
-        android:id="@+id/iv_user"
+        android:id="@+id/profile_imageview"
         android:layout_width="220dp"
         android:layout_height="220dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -27,7 +27,7 @@
         android:scaleType="centerCrop"
         android:src="@drawable/ic_account"/>
     <TextView
-        android:id="@+id/tv2"
+        android:id="@+id/profile_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="프로필사진 가지러가기"
@@ -35,9 +35,9 @@
         android:layout_marginTop="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_user"/>
+        app:layout_constraintTop_toBottomOf="@id/profile_imageview"/>
     <TextView
-        android:id="@+id/tv3"
+        android:id="@+id/tv2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="프로필을 설정하여\n자신을 알리세요"
@@ -45,22 +45,22 @@
         android:gravity="center"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv2"
-        app:layout_constraintBottom_toTopOf="@id/btn_save"
+        app:layout_constraintTop_toBottomOf="@id/profile_textview"
+        app:layout_constraintBottom_toTopOf="@id/save_button"
         android:layout_marginTop="25dp"/>
     <Button
-        android:id="@+id/btn_save"
+        android:id="@+id/save_button"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="저장하기"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv3"
+        app:layout_constraintTop_toBottomOf="@id/tv2"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="40dp"
         android:background="@drawable/start"/>
     <Button
-        android:id="@+id/btn_skip"
+        android:id="@+id/skip_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintRight_toRightOf="parent"

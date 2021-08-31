@@ -144,7 +144,6 @@ public class SignUpActivity extends AppCompatActivity {
                         } else {
                             progressDialog.dismiss();
                             Toast.makeText(SignUpActivity.this, "등록 에러", Toast.LENGTH_SHORT).show();
-                            return;
                         }
                     }
                 });

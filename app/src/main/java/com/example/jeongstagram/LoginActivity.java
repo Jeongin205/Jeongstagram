@@ -60,26 +60,26 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }
 
-        binding.btnGlogin.setOnClickListener(v -> {
+        binding.googleLoginButton.setOnClickListener(v -> {
             setProgressDialog();
             signIn();
         });
 
 
-        binding.join.setOnClickListener(v -> {
+        binding.signUpButton.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.sliding_up, R.anim.stay);
         });
-        binding.btnLogin.setOnClickListener(v -> {
+        binding.loginButton.setOnClickListener(v -> {
             setProgressDialog();
-            if (binding.etEmail.getText().toString().replace(" ", "").equals("")) isEmail = false;
+            if (binding.emailEdittext.getText().toString().replace(" ", "").equals("")) isEmail = false;
             else isEmail = true;
-            if (binding.etPwd.getText().toString().replace(" ", "").equals("")) isPwd = false;
+            if (binding.passwordEdittext.getText().toString().replace(" ", "").equals("")) isPwd = false;
             else isPwd = true;
             if (isEmail && isPwd) {
-                String email = binding.etEmail.getText().toString();
-                String pwd = binding.etPwd.getText().toString();
+                String email = binding.emailEdittext.getText().toString();
+                String pwd = binding.passwordEdittext.getText().toString();
                 mAuth.signInWithEmailAndPassword(email, pwd).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {

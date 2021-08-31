@@ -41,13 +41,13 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 email = snapshot.getValue(String.class);
-                binding.tvEmail.setText(email);
+                binding.emailTextview.setText(email);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {}
         });
 
-        binding.btnBack.setOnClickListener(v -> {
+        binding.backButton.setOnClickListener(v -> {
             finish();
         });
 
