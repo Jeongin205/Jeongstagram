@@ -38,11 +38,11 @@ public class ProfileFragment extends Fragment {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        binding.btnWrite.setOnClickListener(v -> {
+        binding.writeButton.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), WriteActivity.class);
             startActivity(intent);
         });
-        binding.btnSettingMenu.setOnClickListener(v -> {
+        binding.bottomSheetMenuButton.setOnClickListener(v -> {
             BottomSheetSettingFragment sheetDialogFragment = new BottomSheetSettingFragment();
             sheetDialogFragment.show(getActivity().getSupportFragmentManager(), "bottomSheet");
         });
@@ -51,9 +51,9 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 UserData account = snapshot.getValue(UserData.class);
-                binding.tvName.setText(account.getName());
-                if(account.getIntroduce()==null) binding.tvIntroduce.setText("");
-                else binding.tvIntroduce.setText(account.getIntroduce());
+                binding.nameTextview.setText(account.getName());
+                if(account.getIntroduce()==null) binding.introduceTextview.setText("");
+                else binding.introduceTextview.setText(account.getIntroduce());
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {}
@@ -61,10 +61,10 @@ public class ProfileFragment extends Fragment {
         storageReference.child("userImages/"+uid).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Glide.with(ProfileFragment.this).load(uri).into(binding.profile);
+                Glide.with(ProfileFragment.this).load(uri).into(binding.profileImageview);
             }
         });
-        binding.btnEditProfile.setOnClickListener(v -> {
+        binding.profileEditButton.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), EditProfileActivity.class);
             startActivity(intent);
         });

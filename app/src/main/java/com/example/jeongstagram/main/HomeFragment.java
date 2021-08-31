@@ -21,7 +21,7 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        binding.btnWrite.setOnClickListener(v -> {
+        binding.writeButton.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), WriteActivity.class);
             startActivity(intent);
         });
