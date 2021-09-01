@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -20,11 +21,22 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.jeongstagram.GpsTracker;
+import com.example.jeongstagram.data.PostData;
 import com.example.jeongstagram.databinding.ActivityWriteBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -34,7 +46,11 @@ public class WriteActivity extends AppCompatActivity {
     Uri selectedImageUri;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String uid = user.getUid();
+    Date currentTime = Calendar.getInstance().getTime();
+    String date;
+    String name;
     private GpsTracker gpsTracker;
+    SharedPreferences preferences;
 
 
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
@@ -46,7 +62,9 @@ public class WriteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityWriteBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(currentTime);
+        preferences = getSharedPreferences("user", MODE_PRIVATE);
+        name = preferences.getString("name", null);
         if (!checkLocationServicesStatus()) {
 
             showDialogForLocationServiceSetting();
@@ -71,10 +89,26 @@ public class WriteActivity extends AppCompatActivity {
             finish();
         });
         binding.sendButton.setOnClickListener(v -> {
-            if(selectedImageUri!=null){
-
-            }
-            else Toast.makeText(getApplicationContext(), "이미지를 넣어주세요", Toast.LENGTH_SHORT).show();
+            if (selectedImageUri != null) {
+                PostData postData = new PostData();
+                postData.heartCount = 0;
+                postData.location = binding.locationEdittext.getText().toString();
+                postData.postID = uid+date;
+                postData.post = binding.postEdittext.getText().toString();
+                postData.uid = uid;
+                postData.name = name;
+                FirebaseDatabase.getInstance().getReference().child("post").child(uid+date).setValue(postData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        FirebaseStorage.getInstance().getReference().child("post").child(uid+date).putFile(selectedImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                                finish();
+                            }
+                        });
+                    }
+                });
+            } else Toast.makeText(getApplicationContext(), "이미지를 넣어주세요", Toast.LENGTH_SHORT).show();
         });
 
     }

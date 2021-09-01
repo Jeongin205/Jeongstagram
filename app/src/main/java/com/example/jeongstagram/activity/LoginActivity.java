@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -35,11 +36,13 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = database.getReference();
+    String name, email;
     boolean isEmail = false;
     boolean isPwd = false;
     private GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 9001;
     ProgressDialog progressDialog;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         mAuth = FirebaseAuth.getInstance();
+        editor = getSharedPreferences("user", MODE_PRIVATE).edit();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -140,13 +144,15 @@ public class LoginActivity extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     if (snapshot.getValue(getClass()) == null) {
-                                        String name = user.getDisplayName();
-                                        String email = user.getEmail();
+                                        email = user.getEmail();
+                                        name = user.getDisplayName();
                                         String introduce = "안녕하세요";
                                         UserData account = new UserData(name, email, uid, introduce);
                                         databaseReference.child("User").child(uid).setValue(account);
                                         progressDialog.dismiss();
                                     }
+                                    editor.putString("name", name);
+                                    editor.apply();
                                 }
 
                                 @Override

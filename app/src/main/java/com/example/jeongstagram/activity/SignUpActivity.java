@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -29,16 +30,17 @@ public class SignUpActivity extends AppCompatActivity {
     boolean isName = false;
     boolean isEmail = false;
     boolean isPwd = false;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference databaseReference = database.getReference();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         ProgressDialog progressDialog = new ProgressDialog(SignUpActivity.this);
         mAuth = FirebaseAuth.getInstance();
+        editor = getSharedPreferences("user", MODE_PRIVATE).edit();
 
         binding.nameEdittext.addTextChangedListener(new TextWatcher() {
             @Override
@@ -139,6 +141,8 @@ public class SignUpActivity extends AppCompatActivity {
                             String introduce = "안녕하세요";
                             UserData account = new UserData(name, email, uid, introduce);
                             databaseReference.child("User").child(uid).setValue(account);
+                            editor.putString("name", name);
+                            editor.apply();
                             progressDialog.dismiss();
                             Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
                             startActivity(intent);
