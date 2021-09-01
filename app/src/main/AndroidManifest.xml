@@ -12,21 +12,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Jeongstagram">
-        <activity android:name=".WriteActivity"></activity>
-        <activity android:name=".EditProfileActivity" />
-        <activity android:name=".SettingActivity" />
-        <activity android:name=".tutorial.ProfileActivity" />
-        <activity android:name=".tutorial.TutorialActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".SignUpActivity" />
-        <activity android:name=".SplashActivity">
+        <activity android:name=".activity.WriteActivity"></activity>
+        <activity android:name=".activity.EditProfileActivity" />
+        <activity android:name=".activity.SettingActivity" />
+        <activity android:name=".activity.ProfileActivity" />
+        <activity android:name=".activity.TutorialActivity" />
+        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.SignUpActivity" />
+        <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".main.MainActivity" />
+        <activity android:name=".activity.MainActivity" />
     </application>
 
 </manifest>

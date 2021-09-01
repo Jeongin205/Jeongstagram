@@ -1,4 +1,4 @@
-package com.example.jeongstagram.main;
+package com.example.jeongstagram.fragment;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -11,10 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
-import com.example.jeongstagram.BottomSheetSettingFragment;
-import com.example.jeongstagram.EditProfileActivity;
+import com.example.jeongstagram.activity.EditProfileActivity;
 import com.example.jeongstagram.data.UserData;
-import com.example.jeongstagram.WriteActivity;
+import com.example.jeongstagram.activity.WriteActivity;
 import com.example.jeongstagram.databinding.FragmentProfileBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;

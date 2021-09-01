@@ -1,4 +1,4 @@
-package com.example.jeongstagram.main;
+package com.example.jeongstagram.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,16 +7,16 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.jeongstagram.databinding.FragmentHomeBinding;
-import com.example.jeongstagram.databinding.FragmentSearchBinding;
+import com.example.jeongstagram.databinding.FragmentPhotoBinding;
+import com.example.jeongstagram.databinding.FragmentShopBinding;
 
-public class SearchFragment extends Fragment {
-    private FragmentSearchBinding binding;
+public class ShopFragment extends Fragment {
+    private FragmentShopBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentSearchBinding.inflate(inflater, container, false);
+        binding = FragmentShopBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         // Inflate the layout for this fragment
         return view;

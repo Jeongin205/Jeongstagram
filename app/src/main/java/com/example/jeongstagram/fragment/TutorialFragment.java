@@ -1,7 +1,6 @@
-package com.example.jeongstagram.tutorial;
+package com.example.jeongstagram.fragment;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +13,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.jeongstagram.R;
-import com.example.jeongstagram.main.MainActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
+import com.example.jeongstagram.activity.MainActivity;
+import com.example.jeongstagram.activity.ProfileActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class TutorialFragment extends Fragment {
 

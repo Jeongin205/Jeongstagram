@@ -1,4 +1,4 @@
-package com.example.jeongstagram;
+package com.example.jeongstagram.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -19,6 +19,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.jeongstagram.GpsTracker;
 import com.example.jeongstagram.databinding.ActivityWriteBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

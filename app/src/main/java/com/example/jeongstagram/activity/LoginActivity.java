@@ -1,4 +1,4 @@
-package com.example.jeongstagram;
+package com.example.jeongstagram.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,9 +9,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.jeongstagram.R;
 import com.example.jeongstagram.data.UserData;
 import com.example.jeongstagram.databinding.ActivityLoginBinding;
-import com.example.jeongstagram.main.MainActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;

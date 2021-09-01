@@ -1,4 +1,4 @@
-package com.example.jeongstagram.tutorial;
+package com.example.jeongstagram.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.jeongstagram.databinding.ActivityProfileBinding;
-import com.example.jeongstagram.main.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;

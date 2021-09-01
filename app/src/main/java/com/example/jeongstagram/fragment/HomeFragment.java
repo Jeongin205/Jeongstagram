@@ -1,4 +1,4 @@
-package com.example.jeongstagram.main;
+package com.example.jeongstagram.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.jeongstagram.WriteActivity;
+import com.example.jeongstagram.activity.WriteActivity;
 import com.example.jeongstagram.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {

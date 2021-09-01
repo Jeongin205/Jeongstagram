@@ -1,18 +1,9 @@
-package com.example.jeongstagram;
+package com.example.jeongstagram.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
-
-import com.example.jeongstagram.main.HomeFragment;
-import com.example.jeongstagram.main.MainActivity;
-import com.example.jeongstagram.main.PhotoFragment;
-import com.example.jeongstagram.main.ProfileFragment;
-import com.example.jeongstagram.main.SearchFragment;
-import com.example.jeongstagram.main.ShopFragment;
 
 import java.util.ArrayList;
 import java.util.List;

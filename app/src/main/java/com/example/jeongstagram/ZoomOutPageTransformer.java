@@ -1,4 +1,4 @@
-package com.example.jeongstagram.tutorial;
+package com.example.jeongstagram;
 
 import android.view.View;
 

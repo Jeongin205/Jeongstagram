@@ -1,27 +1,21 @@
-package com.example.jeongstagram.main;
+package com.example.jeongstagram.activity;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Icon;
-import android.net.Uri;
 import android.os.Bundle;
-import android.widget.TableLayout;
 
 import com.example.jeongstagram.R;
-import com.example.jeongstagram.ViewPagerAdapter;
+import com.example.jeongstagram.adapter.ViewPagerAdapter;
 import com.example.jeongstagram.databinding.ActivityMainBinding;
-import com.example.jeongstagram.tutorial.TutorialActivity;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.tabs.TabLayout;
+import com.example.jeongstagram.fragment.HomeFragment;
+import com.example.jeongstagram.fragment.PhotoFragment;
+import com.example.jeongstagram.fragment.ProfileFragment;
+import com.example.jeongstagram.fragment.SearchFragment;
+import com.example.jeongstagram.fragment.ShopFragment;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;

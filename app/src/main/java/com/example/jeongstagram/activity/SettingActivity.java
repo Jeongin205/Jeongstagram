@@ -1,4 +1,4 @@
-package com.example.jeongstagram;
+package com.example.jeongstagram.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

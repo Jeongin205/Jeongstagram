@@ -1,4 +1,4 @@
-package com.example.jeongstagram;
+package com.example.jeongstagram.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.Toast;
 
+import com.example.jeongstagram.R;
 import com.example.jeongstagram.data.UserData;
 import com.example.jeongstagram.databinding.ActivitySignUpBinding;
 import com.google.android.gms.tasks.OnCompleteListener;

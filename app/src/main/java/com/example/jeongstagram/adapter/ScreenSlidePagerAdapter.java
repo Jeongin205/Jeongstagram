@@ -1,9 +1,11 @@
-package com.example.jeongstagram.tutorial;
+package com.example.jeongstagram.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+
+import com.example.jeongstagram.fragment.TutorialFragment;
 
 import java.util.ArrayList;
 import java.util.List;

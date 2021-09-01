@@ -1,4 +1,4 @@
-package com.example.jeongstagram.tutorial;
+package com.example.jeongstagram.activity;
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -7,6 +7,8 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.os.Bundle;
 
 import com.example.jeongstagram.R;
+import com.example.jeongstagram.adapter.ScreenSlidePagerAdapter;
+import com.example.jeongstagram.ZoomOutPageTransformer;
 
 import java.util.ArrayList;
 import java.util.List;
