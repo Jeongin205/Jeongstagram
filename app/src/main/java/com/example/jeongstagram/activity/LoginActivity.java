@@ -50,8 +50,8 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         mAuth = FirebaseAuth.getInstance();
+        Log.d("LoginActivity", mAuth.getUid() + "");
         editor = getSharedPreferences("user", MODE_PRIVATE).edit();
-
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -59,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(LoginActivity.this, gso);
 
         if (mAuth.getCurrentUser() != null) {
+            Log.d("LoginActivity", mAuth.getCurrentUser().getUid());
             Intent intent = new Intent(getApplication(), MainActivity.class);
             startActivity(intent);
             finish();
@@ -69,17 +70,19 @@ public class LoginActivity extends AppCompatActivity {
             signIn();
         });
 
-
         binding.signUpButton.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.sliding_up, R.anim.stay);
         });
+
         binding.loginButton.setOnClickListener(v -> {
             setProgressDialog();
-            if (binding.emailEdittext.getText().toString().replace(" ", "").equals("")) isEmail = false;
+            if (binding.emailEdittext.getText().toString().replace(" ", "").equals(""))
+                isEmail = false;
             else isEmail = true;
-            if (binding.passwordEdittext.getText().toString().replace(" ", "").equals("")) isPwd = false;
+            if (binding.passwordEdittext.getText().toString().replace(" ", "").equals(""))
+                isPwd = false;
             else isPwd = true;
             if (isEmail && isPwd) {
                 String email = binding.emailEdittext.getText().toString();
@@ -93,9 +96,10 @@ public class LoginActivity extends AppCompatActivity {
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
                             progressDialog.dismiss();
-                        } else
+                        } else {
                             Toast.makeText(getApplicationContext(), "로그인오류", Toast.LENGTH_SHORT).show();
-                        updateUI(null);
+                            updateUI(null);
+                        }
                     }
                 });
             } else {
@@ -143,7 +147,7 @@ public class LoginActivity extends AppCompatActivity {
                             databaseReference.child("User").child(uid).addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    if (snapshot.getValue(getClass()) == null) {
+                                    if (snapshot.getValue() == null) {
                                         email = user.getEmail();
                                         name = user.getDisplayName();
                                         String introduce = "안녕하세요";
