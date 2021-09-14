@@ -16,10 +16,12 @@ import android.location.Geocoder;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.jeongstagram.BottomSheetWriteFragment;
 import com.example.jeongstagram.GpsTracker;
 import com.example.jeongstagram.data.PostData;
 import com.example.jeongstagram.databinding.ActivityWriteBinding;
@@ -80,9 +82,8 @@ public class WriteActivity extends AppCompatActivity {
             binding.locationEdittext.setText(address);
         });
         binding.postImageview.setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_PICK);
-            intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-            startActivityForResult(intent, GET_GALLERY_IMAGE);
+            BottomSheetWriteFragment sheetWriteFragment = new BottomSheetWriteFragment();
+            sheetWriteFragment.show(getSupportFragmentManager(), "bottomSheet");
         });
 
         binding.cancelButton.setOnClickListener(v -> {

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "290738493809",
+    "firebase_url": "https://jeongstagram-default-rtdb.firebaseio.com",
+    "project_id": "jeongstagram",
+    "storage_bucket": "jeongstagram.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:290738493809:android:c0c7ac7f2a6122f4707ed0",
+        "android_client_info": {
+          "package_name": "com.example.jeongstagram"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "290738493809-d73t57u4bdujvhb2dbmdtqkq1el81bod.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jeongstagram",
+            "certificate_hash": "f9f75b6abaf4178a1898caf1a163193bca8dc724"
+          }
+        },
+        {
+          "client_id": "290738493809-48aratrnv45o39ejucun6of1kbbgv0vd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbnnw-U8TxY0bD4DefZ4hCrGPLLIxd-NI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "290738493809-48aratrnv45o39ejucun6of1kbbgv0vd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
