@@ -28,6 +28,7 @@ public class BottomSheetSettingFragment extends BottomSheetDialogFragment {
         });
 
 
+
         // Inflate the layout for this fragment
         return v;
     }

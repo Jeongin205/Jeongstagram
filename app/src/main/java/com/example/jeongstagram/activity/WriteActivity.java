@@ -1,5 +1,6 @@
 package com.example.jeongstagram.activity;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,7 +43,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class WriteActivity extends AppCompatActivity {
+public class WriteActivity extends AppCompatActivity implements BottomSheetWriteFragment.BottomSheetListener{
     ActivityWriteBinding binding;
     private final int GET_GALLERY_IMAGE = 200;
     Uri selectedImageUri;
@@ -53,7 +54,7 @@ public class WriteActivity extends AppCompatActivity {
     String name;
     private GpsTracker gpsTracker;
     SharedPreferences preferences;
-
+    BottomSheetWriteFragment sheetWriteFragment;
 
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
@@ -64,9 +65,11 @@ public class WriteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityWriteBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        sheetWriteFragment = new BottomSheetWriteFragment();
         date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(currentTime);
         preferences = getSharedPreferences("user", MODE_PRIVATE);
         name = preferences.getString("name", null);
+
         if (!checkLocationServicesStatus()) {
 
             showDialogForLocationServiceSetting();
@@ -82,10 +85,8 @@ public class WriteActivity extends AppCompatActivity {
             binding.locationEdittext.setText(address);
         });
         binding.postImageview.setOnClickListener(v -> {
-            BottomSheetWriteFragment sheetWriteFragment = new BottomSheetWriteFragment();
             sheetWriteFragment.show(getSupportFragmentManager(), "bottomSheet");
         });
-
         binding.cancelButton.setOnClickListener(v -> {
             finish();
         });
@@ -298,4 +299,16 @@ public class WriteActivity extends AppCompatActivity {
                 || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
+    @Override
+    public void onClickGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+        startActivityForResult(intent, GET_GALLERY_IMAGE);
+        sheetWriteFragment.dismiss();
+    }
+
+    @Override
+    public void onCLickCamera() {
+
+    }
 }
