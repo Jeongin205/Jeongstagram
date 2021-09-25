@@ -1,5 +1,8 @@
 package com.example.jeongstagram.activity;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -8,14 +11,18 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -36,7 +43,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -45,7 +54,6 @@ import java.util.Locale;
 
 public class WriteActivity extends AppCompatActivity implements BottomSheetWriteFragment.BottomSheetListener {
     ActivityWriteBinding binding;
-    private final int GET_GALLERY_IMAGE = 200;
     Uri selectedImageUri;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String uid = user.getUid();
@@ -70,15 +78,14 @@ public class WriteActivity extends AppCompatActivity implements BottomSheetWrite
         preferences = getSharedPreferences("user", MODE_PRIVATE);
         name = preferences.getString("name", null);
 
-        if (!checkLocationServicesStatus()) {
-
-            showDialogForLocationServiceSetting();
-        } else {
-
-            checkRunTimePermission();
-        }
 
         binding.locationButton.setOnClickListener(v -> {
+            if (!checkLocationServicesStatus()) {
+
+                showDialogForLocationServiceSetting();
+            } else {
+                checkRunTimePermission();
+            }
             gpsTracker = new GpsTracker(WriteActivity.this);
             double latitude = gpsTracker.getLatitude();
             double longitude = gpsTracker.getLongitude();
@@ -144,10 +151,31 @@ public class WriteActivity extends AppCompatActivity implements BottomSheetWrite
                     finish();
                 } else {
                     Toast.makeText(WriteActivity.this, "퍼미션이 거부되었습니다. 설정(앱 정보)에서 퍼미션을 허용해야 합니다. ", Toast.LENGTH_LONG).show();
-
                 }
             }
 
+        }
+        else if(grandResults.length > 0  && grandResults[0]== PackageManager.PERMISSION_GRANTED){
+            if(permsRequestCode==0){//위에서 코드 0을 보냄
+                setGallery();
+            }
+            else if(permsRequestCode==1){//코드 1
+                setCamera();
+            }
+
+        }
+        // 퍼미션이 승인 거부되면
+        else {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                    || ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
+                //퍼미션 2번까진 아래코드
+                Toast.makeText(WriteActivity.this, "퍼미션이 거부되었습니다. 다시 눌러 퍼미션을 허용해주세요.", Toast.LENGTH_LONG).show();
+
+
+            }else {
+                Toast.makeText(WriteActivity.this, "퍼미션이 거부되었습니다. 설정(앱 정보)에서 퍼미션을 허용해야 합니다. ", Toast.LENGTH_LONG).show();
+                //2번이후론 알아서
+            }
         }
     }
 
@@ -222,7 +250,8 @@ public class WriteActivity extends AppCompatActivity implements BottomSheetWrite
                         = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 startActivityForResult(callGPSSettingIntent, GPS_ENABLE_REQUEST_CODE);
             }
-        }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
+        });
+        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 dialog.cancel();
@@ -233,10 +262,6 @@ public class WriteActivity extends AppCompatActivity implements BottomSheetWrite
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == GET_GALLERY_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            selectedImageUri = data.getData();
-            Glide.with(getApplicationContext()).load(selectedImageUri).into(binding.postImageview);
-        }
         switch (requestCode) {
             case GPS_ENABLE_REQUEST_CODE:
                 //사용자가 GPS 활성 시켰는지 검사
@@ -247,7 +272,33 @@ public class WriteActivity extends AppCompatActivity implements BottomSheetWrite
                         return;
                     }
                 }
-            case GET_GALLERY_IMAGE:
+                break;
+            case 0:
+                if (resultCode == RESULT_OK) {
+                    try {
+                        InputStream in = getContentResolver().openInputStream(data.getData());
+                        Bitmap img = BitmapFactory.decodeStream(in);
+                        in.close();
+                        selectedImageUri= getImageUri(this, img);
+                        Glide.with(getApplicationContext()).load(img).into(binding.postImageview);
+                    } catch (Exception e) {
+
+                    }
+                } else if (resultCode == RESULT_CANCELED) {
+                    Toast.makeText(this, "사진 선택 취소", Toast.LENGTH_LONG).show();
+                }
+                break;
+            case 1:
+                if(resultCode == RESULT_OK){
+                    try{
+                        Bundle extras = data.getExtras();
+                        Bitmap imageBitmap = (Bitmap) extras.get("data");
+                        selectedImageUri = getImageUri(this, imageBitmap);
+                        Glide.with(getApplicationContext()).load(imageBitmap).into(binding.postImageview);
+                    }catch (Exception e){
+
+                    }
+                }
                 break;
         }
     }
@@ -260,14 +311,45 @@ public class WriteActivity extends AppCompatActivity implements BottomSheetWrite
 
     @Override
     public void onClickGallery() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-        startActivityForResult(intent, GET_GALLERY_IMAGE);
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)==PackageManager.PERMISSION_DENIED){
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
+        }//퍼미션이 허용되지 않아 있다면 퍼미션 허용메세지 생성 & 코드0보내기
+        else{
+            setGallery();//퍼미션이 허용되어 있다면 갤러리불러오기
+        }
         sheetWriteFragment.dismiss();
+
     }
+
 
     @Override
     public void onCLickCamera() {
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)==PackageManager.PERMISSION_DENIED){
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, 1);//코드 1보내기
+        }
+        else{
+            setCamera();
+        }
 
+        sheetWriteFragment.dismiss();
     }
+    private void setGallery(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, 0);
+    }
+    private void setCamera(){
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, 1);
+    }
+    public Uri getImageUri(Context ctx, Bitmap bitmap) {//비트맵 Uri로 변환
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage
+                (ctx.getContentResolver(),
+                        bitmap, "Temp", null);
+        return Uri.parse(path);
+    }
+
 }
